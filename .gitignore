@@ -29,3 +29,5 @@ dist-ssr
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+/auth-results/.last-run.json
+/auth-results/smoke-login.smoke-login-shows-error-chromium/trace.zip

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import 'dotenv/config';
 
 const isCI = !!process.env.CI;
 
@@ -11,7 +12,7 @@ export default defineConfig({
   workers: isCI ? 2 : undefined,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: process.env.BASE_UI_URL,
     headless: isCI,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
