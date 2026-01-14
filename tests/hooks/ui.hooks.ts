@@ -1,8 +1,7 @@
 import { test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  // UI preconditions
-  await page.goto('/');
+  //await page.goto('/');
 });
 
 test.afterEach(async ({ page }, testInfo) => {
