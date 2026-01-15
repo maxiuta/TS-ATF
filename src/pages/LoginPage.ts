@@ -1,36 +1,33 @@
-import type { Locator, Page } from '@playwright/test';
+import { Locator } from '@playwright/test';
+import { BasePage } from './BasePage';
 import { env } from '@utils/ConfigReader';
+import { FieldManager } from '@/components';
 
-export class LoginPage {
-  readonly page: Page;
+export class LoginPage extends BasePage {
+  readonly email: Locator = this.page.getByTestId("[id='email']");
+  readonly password: Locator = this.page.getByTestId("[id='password']");
+  readonly submit: Locator = this.page.getByTestId("[id='submit']");
+  readonly error: Locator = this.page.locator("[id='error']");
+  readonly signUp: Locator = this.page.locator("[id='signup']");
+  private fm = new FieldManager(this.page.getByTestId('login-form'));
 
-  readonly username: Locator;
-  readonly password: Locator;
-  readonly submit: Locator;
-  readonly error: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-
-    this.username = page.locator('#username');
-    this.password = page.locator('#password');
-    this.submit = page.locator('#submit');
-    this.error = page.locator('.error');
+  async isAt(): Promise<boolean> {
+    return this.signUp.isVisible();
   }
 
   async open(): Promise<void> {
     await this.page.goto(env.baseUiUrl);
   }
 
-  async fillUsername(value: string): Promise<void> {
-    await this.username.fill(value);
+  async fillEmail(value: string): Promise<void> {
+    await this.fm.input(this.email).fill(value);
   }
 
   async fillPassword(value: string): Promise<void> {
-    await this.password.fill(value);
+    await this.fm.input(this.password).fill(value);
   }
 
   async submitLogin(): Promise<void> {
-    await this.submit.click();
+    await this.fm.button(this.submit).click();
   }
 }

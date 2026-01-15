@@ -10,15 +10,17 @@ export class LoginPageSteps {
 
   async openLogin(): Promise<void> {
     await this.loginPage.open();
+    await this.loginPage.isAt();
   }
 
   async login(username: string, password: string): Promise<void> {
-    await this.loginPage.fillUsername(username);
+    await this.loginPage.fillEmail(username);
     await this.loginPage.fillPassword(password);
     await this.loginPage.submitLogin();
   }
 
-  async expectError(text: string): Promise<void> {
+  async loginErrorIsDisplayed(text: string): Promise<void> {
+    expect(this.loginPage.error.isVisible).toBe(true);
     await expect(this.loginPage.error).toHaveText(text);
   }
 }

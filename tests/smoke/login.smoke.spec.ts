@@ -7,9 +7,5 @@ auth.beforeEach(async ({ loginPageSteps }) => {
 
 auth('login shows error', async ({ loginPageSteps }) => {
   await loginPageSteps.login('bad', 'bad');
-  await loginPageSteps.expectError('Invalid credentials');
+  await loginPageSteps.loginErrorIsDisplayed('Invalid credentials');
 });
-
-export async function createUserStep(dataStore: DataStore) {
-  dataStore.set('token', 'abc');
-}
