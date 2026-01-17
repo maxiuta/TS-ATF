@@ -1,3 +1,4 @@
+import { expect, type Page } from '@playwright/test';
 import { LoginPage } from '@pages/LoginPage';
 import { SoftAssert } from '@/utils/SoftAssert';
 import { DataStore } from '@/utils/DataStore';
@@ -14,6 +15,10 @@ export class LoginPageSteps extends BaseStep {
   }
 
   async openLogin(): Promise<void> {
+    await this.step('Open login page', async () => {
+      await this.loginPage.open();
+      await this.loginPage.isAt();
+    });
     await this.step('Open login page', async () => {
       await this.loginPage.open();
       await this.loginPage.isAt();
