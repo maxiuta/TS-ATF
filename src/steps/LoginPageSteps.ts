@@ -1,4 +1,3 @@
-import { expect, type Page } from '@playwright/test';
 import { LoginPage } from '@pages/LoginPage';
 import { SoftAssert } from '@/utils/SoftAssert';
 import { DataStore } from '@/utils/DataStore';
