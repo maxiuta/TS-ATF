@@ -1,26 +1,41 @@
-import { expect, type Page } from '@playwright/test';
 import { LoginPage } from '@pages/LoginPage';
+import { SoftAssert } from '@/utils/SoftAssert';
+import { DataStore } from '@/utils/DataStore';
+import { BaseStep } from './BaseStep';
 
-export class LoginPageSteps {
-  readonly loginPage: LoginPage;
-
-  constructor(page: Page) {
-    this.loginPage = new LoginPage(page);
+export class LoginPageSteps extends BaseStep {
+  constructor(
+    private readonly loginPage: LoginPage,
+    softAssert: SoftAssert,
+    dataStore: DataStore,
+    logger: { info(msg: string): void; error(msg: string): void },
+  ) {
+    super(softAssert, dataStore, logger);
   }
 
   async openLogin(): Promise<void> {
-    await this.loginPage.open();
-    await this.loginPage.isAt();
+    await this.step('Open login page', async () => {
+      await this.loginPage.open();
+      await this.loginPage.isAt();
+    });
   }
 
   async login(username: string, password: string): Promise<void> {
-    await this.loginPage.fillEmail(username);
-    await this.loginPage.fillPassword(password);
-    await this.loginPage.submitLogin();
+    await this.step('Login with credentials', async () => {
+      await this.loginPage.fillEmail(username);
+      await this.loginPage.fillPassword(password);
+      await this.loginPage.submitLogin();
+    });
   }
 
   async loginErrorIsDisplayed(text: string): Promise<void> {
-    expect(this.loginPage.error.isVisible).toBe(true);
-    await expect(this.loginPage.error).toHaveText(text);
+    await this.step('Verify login error message', async () => {
+      await this.loginPage.error.waitFor({ state: 'visible' });
+
+      this.softAssert.assertEquals(
+        (await this.loginPage.error.textContent()) ?? '',
+        text,
+      );
+    });
   }
 }

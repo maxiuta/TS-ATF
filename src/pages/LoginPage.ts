@@ -4,12 +4,12 @@ import { env } from '@utils/ConfigReader';
 import { FieldManager } from '@/components';
 
 export class LoginPage extends BasePage {
-  readonly email: Locator = this.page.getByTestId("[id='email']");
-  readonly password: Locator = this.page.getByTestId("[id='password']");
-  readonly submit: Locator = this.page.getByTestId("[id='submit']");
+  readonly email: Locator = this.page.locator("[id='email']");
+  readonly password: Locator = this.page.locator("[id='password']");
+  readonly submit: Locator = this.page.locator("[id='submit']");
   readonly error: Locator = this.page.locator("[id='error']");
   readonly signUp: Locator = this.page.locator("[id='signup']");
-  private fm = new FieldManager(this.page.getByTestId('login-form'));
+  private fm = new FieldManager(this.page.locator('form'));
 
   async isAt(): Promise<boolean> {
     return this.signUp.isVisible();
