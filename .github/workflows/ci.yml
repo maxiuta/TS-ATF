@@ -1,8 +1,9 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
+  #branches: [ main ]
   pull_request:
 
 jobs:
@@ -17,8 +18,13 @@ jobs:
           node-version: 20
           cache: npm
 
+
       - name: Install deps
         run: npm ci
+
+      - name: Ensure report dir
+        if: always()
+        run: mkdir -p playwright-report
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
