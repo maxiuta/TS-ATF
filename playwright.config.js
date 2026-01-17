@@ -10,7 +10,10 @@ export default defineConfig({
   fullyParallel: true,
   retries: isCI ? 2 : 0,
   workers: isCI ? 2 : 1,
-  reporter: [['list']],
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
   use: {
     baseURL: process.env.BASE_UI_URL,
     headless: isCI,
