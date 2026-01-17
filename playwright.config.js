@@ -9,8 +9,8 @@ export default defineConfig({
   expect: { timeout: 5_000 },
   fullyParallel: true,
   retries: isCI ? 2 : 0,
-  workers: isCI ? 2 : undefined,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  workers: isCI ? 2 : 1,
+  reporter: [['list']],
   use: {
     baseURL: process.env.BASE_UI_URL,
     headless: isCI,
@@ -18,6 +18,6 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  outputDir: 'auth-results',
+  outputDir: 'baseTest-results',
   forbidOnly: isCI,
 });

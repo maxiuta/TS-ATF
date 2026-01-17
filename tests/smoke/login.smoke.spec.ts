@@ -1,11 +1,14 @@
-import { auth } from '@fixtures/auth';
-import { DataStore } from '@utils/DataStore';
+import { test } from '@fixtures/baseTest';
+import { createLogger } from '@utils/Logger';
+import { dataStore } from '@fixtures/dataStore';
+const log = createLogger('UI');
 
-auth.beforeEach(async ({ loginPageSteps }) => {
+test.beforeEach(async ({ loginPageSteps }) => {
   await loginPageSteps.openLogin();
+  const с = 0;
 });
 
-auth('login shows error', async ({ loginPageSteps }) => {
+test('login shows error', async ({ loginPageSteps }) => {
   await loginPageSteps.login('bad', 'bad');
-  await loginPageSteps.loginErrorIsDisplayed('Invalid credentials');
+  await loginPageSteps.loginErrorIsDisplayed('Incorrect username or password');
 });
