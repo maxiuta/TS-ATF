@@ -18,10 +18,6 @@ export class LoginPageSteps extends BaseStep {
       await this.loginPage.open();
       await this.loginPage.isAt();
     });
-    await this.step('Open login page', async () => {
-      await this.loginPage.open();
-      await this.loginPage.isAt();
-    });
   }
 
   async login(username: string, password: string): Promise<void> {
