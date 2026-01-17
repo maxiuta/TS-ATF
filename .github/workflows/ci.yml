@@ -1,4 +1,4 @@
-name: CI
+name: MG-TS-ATF-run
 
 on:
   workflow_dispatch:
