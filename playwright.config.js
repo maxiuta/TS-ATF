@@ -10,10 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   retries: isCI ? 2 : 0,
   workers: isCI ? 2 : 1,
-  reporter: [
-    ['list'],
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
-  ],
+  reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: process.env.BASE_UI_URL,
     headless: isCI,
@@ -21,6 +18,6 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  outputDir: 'baseTest-results',
+  outputDir: 'test-results',
   forbidOnly: isCI,
 });
