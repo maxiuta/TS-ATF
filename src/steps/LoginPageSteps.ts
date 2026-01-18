@@ -20,6 +20,12 @@ export class LoginPageSteps extends BaseStep {
     });
   }
 
+  async clickSignUpButton(): Promise<void> {
+    await this.step('Click Sign Up button', async () => {
+      await this.loginPage.clickSignUpButton();
+    });
+  }
+
   async validateLoginPageTitle(title: string): Promise<void> {
     await this.step('Login page title contains correct title', async () => {
       this.softAssert.assertEquals(

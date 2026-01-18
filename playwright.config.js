@@ -16,6 +16,7 @@ export default defineConfig({
     headless: isCI,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
+    storageState: undefined,
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   outputDir: 'test-results',

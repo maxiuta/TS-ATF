@@ -32,7 +32,7 @@ export class SoftAssert {
     const step = this.currentStep;
     const details = `Expected: <${this.stringify(expected)}>, Actual: <${this.stringify(actual)}>`;
     try {
-      expect(actual).toBe(expected);
+      expect(actual as any).toEqual(expected as any);
       this.logInfo(step, details);
     } catch (e) {
       this.logError(step, SoftAssert.DEFAULT_FAILURE_MESSAGE);

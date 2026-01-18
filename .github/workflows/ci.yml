@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         env:
           CI: true
-        run: npx playwright test tests/smoke/login.smoke.spec.ts
+        run: npx playwright test tests/smoke/smoke.spec.ts
 
       - name: Upload Playwright report
         if: always()

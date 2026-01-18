@@ -1,30 +1,21 @@
 export class DataStore {
-  private readonly map = new Map<string, unknown>();
+  private static instance: DataStore = new DataStore();
 
-  set<T>(key: string, value: T): void {
-    this.map.set(key, value);
+  private data = new Map<string, unknown>();
+
+  static getDataStore(): DataStore {
+    return DataStore.instance;
   }
 
-  get<T>(key: string): T | undefined {
-    return this.map.get(key) as T | undefined;
+  set(key: string, value: unknown) {
+    this.data.set(key, value);
   }
 
-  require<T>(key: string): T {
-    if (!this.map.has(key)) {
-      throw new Error(`DataStore: missing key "${key}"`);
-    }
-    return this.map.get(key) as T;
+  get<T>(key: string): T {
+    return this.data.get(key) as T;
   }
 
-  has(key: string): boolean {
-    return this.map.has(key);
-  }
-
-  delete(key: string): void {
-    this.map.delete(key);
-  }
-
-  clear(): void {
-    this.map.clear();
+  clear() {
+    this.data.clear();
   }
 }

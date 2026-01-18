@@ -31,4 +31,8 @@ export class LoginPage extends BasePage {
   async submitLogin(): Promise<void> {
     await this.fm.button(this.submit).click();
   }
+
+  async clickSignUpButton(): Promise<void> {
+    await this.fm.button(this.signUp).click();
+  }
 }

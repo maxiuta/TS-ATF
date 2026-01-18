@@ -2,10 +2,13 @@ import { SignUpPage } from '@pages/SignUpPage';
 import { SoftAssert } from '@utils/SoftAssert';
 import { DataStore } from '@utils/DataStore';
 import { BaseStep } from './BaseStep';
+import { generatePerson } from '@utils/DataGenerator';
+import { LoginPage } from '@pages/LoginPage';
 
 export class SignUpPageSteps extends BaseStep {
   constructor(
-    private readonly signUpPageSteps: SignUpPage,
+    private readonly signUpPage: SignUpPage,
+    private readonly loginPage: LoginPage,
     softAssert: SoftAssert,
     dataStore: DataStore,
     logger: { info(msg: string): void; error(msg: string): void },
@@ -13,39 +16,51 @@ export class SignUpPageSteps extends BaseStep {
     super(softAssert, dataStore, logger);
   }
 
+  async openSignUpPage(): Promise<void> {
+    await this.step('Open Sign Up page', async () => {
+      await this.loginPage.clickSignUpButton();
+    });
+  }
+
   async validateSignUpPageIsDisplayed(): Promise<void> {
     await this.step('Sign Up page is displayed', async () => {
-      await this.signUpPageSteps.isAt();
+      await this.signUpPage.isAt();
     });
   }
 
   async validateSignUpPageTitle(title: string): Promise<void> {
     await this.step('Sign up page title contains correct title', async () => {
       this.softAssert.assertEquals(
-        await this.signUpPageSteps.title.textContent(),
+        await this.signUpPage.title.textContent(),
         title,
       );
     });
   }
 
-  async submitSignUpForm(username: string, password: string): Promise<void> {
+  async submitSignUpForm(): Promise<void> {
     await this.step('Submit sign up form with valid data', async () => {
-      await this.signUpPageSteps.fillFirstName(password);
-      await this.signUpPageSteps.fillLastName(password);
-      await this.signUpPageSteps.fillEmail(username);
-      await this.signUpPageSteps.fillPassword(password);
-      await this.signUpPageSteps.clickSubmit();
+      generatePerson();
+      await this.signUpPage.fillFirstName(this.dataStore.get('FIRST_NAME'));
+      await this.signUpPage.fillLastName(this.dataStore.get('LAST_NAME'));
+      await this.signUpPage.fillEmail(this.dataStore.get('EMAIL'));
+      await this.signUpPage.fillPassword('Password1!');
+      await this.signUpPage.clickSubmit();
     });
   }
 
-  async signUpFormErrorIsDisplayed(text: string): Promise<void> {
-    await this.step('Verify sign up form error message', async () => {
-      await this.signUpPageSteps.error.waitFor({ state: 'visible' });
+  async validateSignUpFormError(text: string): Promise<void> {
+    await this.step(
+      'Verify sign up form error message is displayed',
+      async () => {
+        await this.signUpPage.clickSubmit();
 
-      this.softAssert.assertEquals(
-        await this.signUpPageSteps.error.textContent(),
-        text,
-      );
-    });
+        await this.signUpPage.error.waitFor({ state: 'visible' });
+
+        this.softAssert.assertEquals(
+          await this.signUpPage.error.textContent(),
+          text,
+        );
+      },
+    );
   }
 }

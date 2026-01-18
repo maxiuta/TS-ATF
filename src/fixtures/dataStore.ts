@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import { DataStore } from '@/utils/DataStore';
 
 export type DataStoreFixtures = {
@@ -7,8 +7,11 @@ export type DataStoreFixtures = {
 
 export const dataStore = base.extend<DataStoreFixtures>({
   dataStore: async ({}, use) => {
-    await use(new DataStore());
+    const store = DataStore.getDataStore();
+    store.clear();
+    await use(store);
+    store.clear();
   },
 });
 
-export { expect } from '@playwright/test';
+export { expect };

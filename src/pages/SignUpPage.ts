@@ -5,8 +5,8 @@ import { FieldManager } from '@/components';
 
 export class SignUpPage extends BasePage {
   readonly title: Locator = this.page.locator('h1');
-  readonly firstName: Locator = this.page.locator("[id='email']");
-  readonly lastName: Locator = this.page.locator("[id='password']");
+  readonly firstName: Locator = this.page.locator("[id='firstName']");
+  readonly lastName: Locator = this.page.locator("[id='lastName']");
   readonly email: Locator = this.page.locator("[id='email']");
   readonly password: Locator = this.page.locator("[id='password']");
   readonly submit: Locator = this.page.locator("[id='submit']");
@@ -15,7 +15,7 @@ export class SignUpPage extends BasePage {
   private fm = new FieldManager(this.page.locator('form'));
 
   async isAt(): Promise<boolean> {
-    return this.submit.isVisible();
+    return this.firstName.isVisible();
   }
 
   async fillFirstName(value: string): Promise<void> {
