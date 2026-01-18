@@ -1,6 +1,8 @@
 import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '@pages/LoginPage';
 import { LoginPageSteps } from '@steps/LoginPageSteps';
+import { SignUpPage } from '@pages/SignUpPage';
+import { SignUpPageSteps } from '@steps/SignUpPageSteps';
 import { SoftAssert } from '@/utils/SoftAssert';
 import { DataStore } from '@/utils/DataStore';
 import { createLogger } from '@utils/Logger';
@@ -13,6 +15,8 @@ type StepLogger = {
 type Fixtures = {
   loginPage: LoginPage;
   loginPageSteps: LoginPageSteps;
+  signUpPage: SignUpPage;
+  signUpPageSteps: SignUpPageSteps;
   softAssert: SoftAssert;
   dataStore: DataStore;
   logger: StepLogger;
@@ -39,6 +43,17 @@ export const test = base.extend<Fixtures>({
 
   loginPageSteps: async ({ loginPage, softAssert, dataStore, logger }, use) => {
     await use(new LoginPageSteps(loginPage, softAssert, dataStore, logger));
+  },
+
+  signUpPage: async ({ page }, use) => {
+    await use(new SignUpPage(page));
+  },
+
+  signUpPageSteps: async (
+    { signUpPage, softAssert, dataStore, logger },
+    use,
+  ) => {
+    await use(new SignUpPageSteps(signUpPage, softAssert, dataStore, logger));
   },
 });
 

@@ -19,6 +19,7 @@ export class SoftAssert {
     "The actual value doesn't match the expected value";
 
   private failures: Failure[] = [];
+
   private currentStep = 'UNDEFINED_STEP';
 
   constructor(private readonly logger: LoggerLike = console) {}

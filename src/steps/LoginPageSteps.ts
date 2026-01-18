@@ -20,6 +20,15 @@ export class LoginPageSteps extends BaseStep {
     });
   }
 
+  async validateLoginPageTitle(title: string): Promise<void> {
+    await this.step('Login page title contains correct title', async () => {
+      this.softAssert.assertEquals(
+        await this.loginPage.title.textContent(),
+        title,
+      );
+    });
+  }
+
   async login(username: string, password: string): Promise<void> {
     await this.step('Login with credentials', async () => {
       await this.loginPage.fillEmail(username);
@@ -33,7 +42,7 @@ export class LoginPageSteps extends BaseStep {
       await this.loginPage.error.waitFor({ state: 'visible' });
 
       this.softAssert.assertEquals(
-        (await this.loginPage.error.textContent()) ?? '',
+        await this.loginPage.error.textContent(),
         text,
       );
     });
