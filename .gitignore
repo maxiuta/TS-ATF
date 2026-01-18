@@ -31,3 +31,4 @@ dist-ssr
 /playwright/.auth/
 /auth-results/.last-run.json
 /auth-results/smoke-login.smoke-login-shows-error-chromium/trace.zip
+/ui-results/.last-run.json
