@@ -1,7 +1,7 @@
 import { Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { env } from '@utils/ConfigReader';
 import { FieldManager } from '@/components';
+import { expect } from '@fixtures/baseTest';
 
 export class SignUpPage extends BasePage {
   readonly title: Locator = this.page.locator('h1');
@@ -14,8 +14,8 @@ export class SignUpPage extends BasePage {
 
   private fm = new FieldManager(this.page.locator('form'));
 
-  async isAt(): Promise<boolean> {
-    return this.firstName.isVisible();
+  async isAt(): Promise<void> {
+    return expect(this.firstName).toBeEditable();
   }
 
   async fillFirstName(value: string): Promise<void> {

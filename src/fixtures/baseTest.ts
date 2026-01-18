@@ -90,4 +90,8 @@ test.afterEach(async ({ logger }, testInfo) => {
   logger.info(`===== TEST ${status}: ${testInfo.title} =====`);
 });
 
+test.afterEach(async ({}) => {
+  DataStore.getDataStore().clear();
+});
+
 export { expect };

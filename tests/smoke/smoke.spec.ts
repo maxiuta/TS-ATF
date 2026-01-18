@@ -30,6 +30,7 @@ test('Validate Contact List table headers', async ({
   await signUpPageSteps.validateSignUpPageIsDisplayed();
   await signUpPageSteps.submitSignUpForm();
 
+  await loginPageSteps.openLogin();
   await loginPageSteps.login(
     DataStore.getDataStore().get('EMAIL'),
     'Password1!',
