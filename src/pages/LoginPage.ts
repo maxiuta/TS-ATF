@@ -13,6 +13,7 @@ export class LoginPage extends BasePage {
   private fm = new FieldManager(this.page.locator('form'));
 
   async isAt(): Promise<boolean> {
+    await this.signUp.waitFor();
     return this.signUp.isVisible();
   }
 
