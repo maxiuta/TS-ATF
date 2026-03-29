@@ -39,7 +39,7 @@ export class SignUpPageSteps extends BaseStep {
 
   async submitSignUpForm(): Promise<void> {
     await this.step('Submit sign up form with valid data', async () => {
-      generatePerson();
+      generatePerson(this.dataStore);
       await this.signUpPage.fillFirstName(this.dataStore.get('FIRST_NAME'));
       await this.signUpPage.fillLastName(this.dataStore.get('LAST_NAME'));
       await this.signUpPage.fillEmail(this.dataStore.get('EMAIL'));
