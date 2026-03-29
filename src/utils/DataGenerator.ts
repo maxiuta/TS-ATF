@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { DataStore } from '@utils/DataStore';
 
 export type PersonData = {
@@ -6,55 +7,25 @@ export type PersonData = {
   email: string;
 };
 
-const FIRST_NAMES = [
-  'Jaaasmes',
-  'Joaashn',
-  'Roaasbert',
-  'Miaaschael',
-  'Wiaaslliam',
-  'Daaasvid',
-  'Joaasseph',
-  'Daaasniel',
-  'Maaastthew',
-  'Anaasdrew',
-  'Chaasristopher',
-  'Thaasomas',
-  'Ryaasan',
-  'Alaasex',
-  'Maaasrk',
-];
-
-const LAST_NAMES = [
-  'Smaasth',
-  'Joaasnson',
-  'Braaswn',
-  'Taaaslor',
-  'Anaaserson',
-  'Thaasmpson',
-  'Whaaste',
-  'Haaasris',
-  'Maaastin',
-  'Claasrk',
-  'Leaasis',
-  'Waaasker',
-  'Haaasl',
-  'Yoaasng',
-  'Kiaasg',
-];
-
-const pick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-
 export function generatePerson(
   dataStore: DataStore,
-  domain = '@example.com',
+  domain?: string,
 ): PersonData {
-  const firstName = pick(FIRST_NAMES);
-  const lastName = pick(LAST_NAMES);
-  const email = firstName.concat(lastName).concat(domain);
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
+  const email = domain
+    ? faker.internet.email({
+        firstName,
+        lastName,
+        provider: domain.replace('@', ''),
+      })
+    : faker.internet.email({ firstName, lastName });
 
   dataStore.set('FIRST_NAME', firstName);
   dataStore.set('LAST_NAME', lastName);
   dataStore.set('EMAIL', email);
+
+  console.log('GENERATED_EMAIL: ' + email);
 
   return { firstName, lastName, email };
 }
