@@ -6,7 +6,8 @@
       "@fixtures/*": ["src/fixtures/*"],
       "@pages/*": ["src/pages/*"],
       "@utils/*": ["src/utils/*"],
-      "@steps/*": ["src/steps/*"]
+      "@steps/*": ["src/steps/*"],
+      "@api/*": ["src/api/*"]
     },
     "allowSyntheticDefaultImports": true
   },
